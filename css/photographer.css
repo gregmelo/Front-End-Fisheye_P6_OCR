@@ -64,7 +64,9 @@
 .photograph-select {
   margin: 20px 100px;
   display: flex;
+  align-items: center;
   gap: 1.5625rem;
+  cursor: pointer;
 }
 .photograph-select label {
   font-size: 18px;
@@ -80,6 +82,15 @@
   border: none;
   box-shadow: 0px 4px 4px 0px #00000040;
   border-radius: 5px;
+  padding: 10px;
+}
+
+.photographer_select__option:hover {
+  background-color: #901c1c;
+  opacity: 0.7;
+}
+.photographer_select__option:nth-last-child(-n + 2) {
+  border-top: solid 1px white;
 }
 
 .modal {

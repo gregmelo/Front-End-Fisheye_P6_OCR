@@ -143,5 +143,10 @@ function photographerTemplateById(data) {
     select.appendChild(photographerSelect);
   }
 
-  return { name, picture, getUserHeaderDOM, getUserSelectDOM };
+  return {
+    name,
+    picture,
+    getUserHeaderDOM,
+    getUserSelectDOM,
+  };
 }
