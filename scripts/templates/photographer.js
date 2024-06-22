@@ -1,13 +1,13 @@
 function photographerTemplate(data) {
   const { name, id, portrait, city, country, tagline, price } = data;
 
-  const picture = `../../assets/photographers/${portrait}`;
+  const picture = `./assets/photographers/${portrait}`;
 
   function getUserCardDOM() {
     const article = document.createElement("article");
     article.classList.add("photographer_card");
     const anchor = document.createElement("a");
-    anchor.setAttribute("href", `../../photographer.html?id=${id}`);
+    anchor.setAttribute("href", `./photographer.html?id=${id}`);
     anchor.setAttribute("aria-label", `Voir le profil de ${name}`);
 
     const img = document.createElement("img");
@@ -44,7 +44,7 @@ function photographerTemplate(data) {
 
 function photographerTemplateById(data) {
   const { name, portrait, city, country, tagline } = data;
-  const picture = `../../assets/photographers/${portrait}`;
+  const picture = `./assets/photographers/${portrait}`;
 
   function getUserHeaderDOM() {
     const header = document.querySelector(".photograph-header");
