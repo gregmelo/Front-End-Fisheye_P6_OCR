@@ -1,7 +1,7 @@
 async function getPhotographers() {
   // Récupération des photographes éventuellement stockés dans le localStorage
   let photographers = window.localStorage.getItem("photographers");
-  if (photographers === null) {
+  if (photographers === null || photographers === "undefined") {
     // Récupération des données depuis l'API
     const reponse = await fetch("./data/photographers.json");
     const data = await reponse.json();
@@ -11,7 +11,15 @@ async function getPhotographers() {
     // Stockage des informations dans le localStorage sous la clé "photographers"
     window.localStorage.setItem("photographers", valeurPhotographers);
   } else {
-    photographers = JSON.parse(photographers);
+    try {
+      photographers = JSON.parse(photographers);
+    } catch (e) {
+      console.error(
+        "Erreur lors de la lecture des données du localStorage :",
+        e
+      );
+      photographers = [];
+    }
     console.log(photographers);
   }
   // Retourner le tableau photographers seulement une fois récupéré
