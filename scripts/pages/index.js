@@ -1,14 +1,22 @@
 async function getPhotographers() {
   let photographers = window.localStorage.getItem("photographers");
   if (photographers === null) {
-    // Récupération des données depuis l'API
-    const reponse = await fetch("./data/photographers.json");
-    const data = await reponse.json();
-    photographers = data.photographers;
-    // Transformation des données en JSON
-    const valeurPhotographers = JSON.stringify(photographers);
-    // Stockage des informations dans le localStorage sous la clé "photographers"
-    window.localStorage.setItem("photographers", valeurPhotographers);
+    try {
+      // Récupération des données depuis l'API
+      const response = await fetch("./data/photographers.json");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      photographers = data.photographers;
+      // Transformation des données en JSON
+      const valeurPhotographers = JSON.stringify(photographers);
+      // Stockage des informations dans le localStorage sous la clé "photographers"
+      window.localStorage.setItem("photographers", valeurPhotographers);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des photographes:", error);
+      return { photographers: [] }; // Retourne un tableau vide en cas d'erreur
+    }
   } else {
     photographers = JSON.parse(photographers);
   }
