@@ -7,25 +7,23 @@ function getPhotographerIdFromUrl() {
 // Mettre le code JavaScript lié à la page photographer.html
 async function getPhotographerById(id) {
   let photographers = window.localStorage.getItem("photographers");
+  console.log("Photographers récupéré du localStorage :", photographers);
+
   if (photographers === null) {
     try {
       // Récupération des données depuis l'API
-      const response = await fetch("/data/photographers.json");
+      const response = await fetch("./data/photographers.json");
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-
-      // Afficher la structure des données pour débogage
       console.log("Données reçues depuis l'API :", data);
 
       // Extraire les photographes de la réponse
       photographers = data.photographers;
 
-      // Transformation des données en JSON
+      // Transformation des données en JSON et stockage
       const valeurPhotographers = JSON.stringify(photographers);
-
-      // Stockage des informations dans le localStorage sous la clé "photographers"
       window.localStorage.setItem("photographers", valeurPhotographers);
     } catch (error) {
       console.error(
@@ -35,8 +33,17 @@ async function getPhotographerById(id) {
       return null;
     }
   } else {
-    // Ici, nous analysons les données stockées pour obtenir l'objet global
-    photographers = JSON.parse(photographers);
+    // Analyser les données stockées pour obtenir le tableau des photographes
+    try {
+      photographers = JSON.parse(photographers);
+      console.log("Photographers après parsing :", photographers);
+    } catch (error) {
+      console.error(
+        "Erreur lors de l'analyse des données du localStorage :",
+        error
+      );
+      return null;
+    }
   }
 
   // Vérifiez si photographers est bien un tableau
@@ -51,7 +58,7 @@ async function getPhotographerById(id) {
 }
 
 async function displayPhotographerData(photographer) {
-  // Ici on s'assure que photographer n'est pas undefined
+  // Assurez-vous que photographer n'est pas undefined
   if (photographer) {
     const photographerModel = photographerTemplateById(photographer);
     photographerModel.getUserHeaderDOM();
