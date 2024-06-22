@@ -1,7 +1,6 @@
 async function getPhotographers() {
-  // Récupération des photographes éventuellement stockés dans le localStorage
   let photographers = window.localStorage.getItem("photographers");
-  if (photographers === null || photographers === "undefined") {
+  if (photographers === null) {
     // Récupération des données depuis l'API
     const reponse = await fetch("./data/photographers.json");
     const data = await reponse.json();
@@ -11,24 +10,18 @@ async function getPhotographers() {
     // Stockage des informations dans le localStorage sous la clé "photographers"
     window.localStorage.setItem("photographers", valeurPhotographers);
   } else {
-    try {
-      photographers = JSON.parse(photographers);
-    } catch (e) {
-      console.error(
-        "Erreur lors de la lecture des données du localStorage :",
-        e
-      );
-      photographers = [];
-    }
-    console.log(photographers);
+    photographers = JSON.parse(photographers);
   }
-  // Retourner le tableau photographers seulement une fois récupéré
-  return photographers;
+  return { photographers };
 }
 
 async function displayData(data) {
-  const photographersSection = document.querySelector(".photographer_section");
+  if (!data || !data.photographers) {
+    console.error("Data format is incorrect:", data);
+    return;
+  }
 
+  const photographersSection = document.querySelector(".photographer_section");
   data.photographers.forEach((photographer) => {
     const photographerModel = photographerTemplate(photographer);
     const userCardDOM = photographerModel.getUserCardDOM();
