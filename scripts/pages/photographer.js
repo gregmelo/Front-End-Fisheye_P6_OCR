@@ -11,7 +11,7 @@ async function getPhotographerById(id) {
   if (photographers === null) {
     try {
       // Récupération des données depuis l'API
-      const response = await fetch("/data/photographers.json");
+      const response = await fetch("./data/photographers.json");
       const data = await response.json();
 
       // Afficher la structure des données pour débogage

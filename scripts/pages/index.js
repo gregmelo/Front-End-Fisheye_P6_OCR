@@ -3,7 +3,7 @@ async function getPhotographers() {
   let photographers = window.localStorage.getItem("photographers");
   if (photographers === null) {
     // Récupération des données depuis l'API
-    const reponse = await fetch("/data/photographers.json");
+    const reponse = await fetch("./data/photographers.json");
     photographers = await reponse.json();
     // Transformation des données en JSON
     const valeurPhotographers = JSON.stringify(photographers);
