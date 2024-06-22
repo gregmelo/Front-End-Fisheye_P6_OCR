@@ -6,19 +6,21 @@ function getPhotographerIdFromUrl() {
 
 // Mettre le code JavaScript lié à la page photographer.html
 async function getPhotographerById(id) {
-  // Récupération des photographes éventuellement stockés dans le localStorage
   let photographers = window.localStorage.getItem("photographers");
   if (photographers === null) {
     try {
       // Récupération des données depuis l'API
       const response = await fetch("/data/photographers.json");
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const data = await response.json();
 
       // Afficher la structure des données pour débogage
       console.log("Données reçues depuis l'API :", data);
 
       // Extraire les photographes de la réponse
-      photographers = data.photographers; // Extraire les photographes de la réponse
+      photographers = data.photographers;
 
       // Transformation des données en JSON
       const valeurPhotographers = JSON.stringify(photographers);
@@ -34,9 +36,7 @@ async function getPhotographerById(id) {
     }
   } else {
     // Ici, nous analysons les données stockées pour obtenir l'objet global
-    const storedData = JSON.parse(photographers);
-    // Ensuite, nous accédons au tableau de photographes à l'intérieur de cet objet
-    photographers = storedData.photographers;
+    photographers = JSON.parse(photographers);
   }
 
   // Vérifiez si photographers est bien un tableau
@@ -51,7 +51,7 @@ async function getPhotographerById(id) {
 }
 
 async function displayPhotographerData(photographer) {
-  // Assurez-vous que photographer n'est pas undefined
+  // Ici on s'assure que photographer n'est pas undefined
   if (photographer) {
     const photographerModel = photographerTemplateById(photographer);
     photographerModel.getUserHeaderDOM();
