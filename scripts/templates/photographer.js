@@ -53,12 +53,24 @@ function photographerTemplate(data) {
 
 function photographerTemplateById(data, medias) {
   // Extraire les informations du photographe
-  const { name, portrait, city, country, tagline } = data;
+  const { name, id, portrait, city, country, tagline, price } = data;
   const picture = `./assets/photographers/${portrait}`;
   // Extraire les informations des médias
-  const { id, photographerId, title, image, video, likes, date, price } =
-    medias;
+  // const { id, photographerId, title, image, video, likes, date, price } =
+  //   medias;
   console.log("Medias :", medias);
+
+  // Fonction pour mettre à jour la somme des likes
+  function updateTotalLikes() {
+    // Calculer le nombre total de likes
+    const totalLikes = medias.reduce((acc, media) => acc + media.likes, 0);
+    // Sélectionner le conteneur du nombre total de likes
+    const insertLikeCount = document.querySelector(
+      ".photograph-insert__like-count"
+    );
+    // Mettre à jour le nombre total de likes
+    insertLikeCount.textContent = totalLikes;
+  }
 
   // Créer le header pour le photographe
   function getUserHeaderDOM() {
@@ -76,7 +88,6 @@ function photographerTemplateById(data, medias) {
     // Créer l'élément pour la localisation
     const location = document.createElement("p");
     location.classList.add("photographer_location");
-    location;
     location.textContent = `${city}, ${country}`;
 
     // Créer l'élément pour la tagline
@@ -257,6 +268,8 @@ function photographerTemplateById(data, medias) {
         }
         // Mettre à jour le nombre de likes
         likeCount.textContent = media.likes;
+        // Mettre à jour le nombre total de likes
+        updateTotalLikes();
       });
 
       // Créer l'icône pour les likes
@@ -289,19 +302,15 @@ function photographerTemplateById(data, medias) {
 
   function getPhotographerInsert() {
     // Sélectionner le conteneur de la insert
-    const gallery = document.querySelector(".photograph-insert");
-    gallery.innerHTML = "";
+    const insert = document.querySelector(".photograph-insert");
+    insert.innerHTML = "";
 
     // Créer les éléments pour l'insert
-    const insertContainer = document.createElement("div");
-    insertContainer.classList.add("photograph-insert__container");
-
     const insertLike = document.createElement("div");
     insertLike.classList.add("photograph-insert__like");
 
     const insertLikeCount = document.createElement("p");
     insertLikeCount.classList.add("photograph-insert__like-count");
-    insertLikeCount.textContent = "0";
 
     const insertLikeIcon = document.createElement("i");
     insertLikeIcon.classList.add(
@@ -312,13 +321,17 @@ function photographerTemplateById(data, medias) {
 
     const insertPrice = document.createElement("p");
     insertPrice.classList.add("photograph-insert__price");
+    insertPrice.textContent = `${price}€/jour`;
 
     insertLike.appendChild(insertLikeCount);
     insertLike.appendChild(insertLikeIcon);
-    insertContainer.appendChild(insertLike);
-    insertContainer.appendChild(insertPrice);
+    insert.appendChild(insertLike);
+    insert.appendChild(insertPrice);
 
-    return insertContainer;
+    // Initialise la somme des likes
+    updateTotalLikes();
+
+    return insert;
   }
 
   return {
