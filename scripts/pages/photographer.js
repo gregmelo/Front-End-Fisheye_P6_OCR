@@ -135,7 +135,7 @@ async function displayPhotographerData(photographer, media) {
     photographerModel.getUserHeaderDOM();
     photographerModel.getUserSelectDOM();
     photographerModel.getPhotographerGalleryDOM();
-    photographerModel.getPhotographerInsert();
+    photographerModel.getPhotographerOverlay();
   } else {
     // Gestion des erreurs
     console.error("Photographer or media not found");

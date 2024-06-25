@@ -65,11 +65,11 @@ function photographerTemplateById(data, medias) {
     // Calculer le nombre total de likes
     const totalLikes = medias.reduce((acc, media) => acc + media.likes, 0);
     // Sélectionner le conteneur du nombre total de likes
-    const insertLikeCount = document.querySelector(
-      ".photograph-insert__like-count"
+    const overlayLikeCount = document.querySelector(
+      ".photograph-overlay__like-count"
     );
     // Mettre à jour le nombre total de likes
-    insertLikeCount.textContent = totalLikes;
+    overlayLikeCount.textContent = totalLikes;
   }
 
   // Créer le header pour le photographe
@@ -300,39 +300,106 @@ function photographerTemplateById(data, medias) {
     return galleryContainer;
   }
 
-  function getPhotographerInsert() {
-    // Sélectionner le conteneur de la insert
-    const insert = document.querySelector(".photograph-insert");
-    insert.innerHTML = "";
+  function getPhotographerOverlay() {
+    // Sélectionner le conteneur de la overlay
+    const overlay = document.querySelector(".photograph-overlay");
+    overlay.innerHTML = "";
 
-    // Créer les éléments pour l'insert
-    const insertLike = document.createElement("div");
-    insertLike.classList.add("photograph-insert__like");
+    // Créer les éléments pour l'overlay
+    const overlayLike = document.createElement("div");
+    overlayLike.classList.add("photograph-overlay__like");
 
-    const insertLikeCount = document.createElement("p");
-    insertLikeCount.classList.add("photograph-insert__like-count");
+    const overlayLikeCount = document.createElement("p");
+    overlayLikeCount.classList.add("photograph-overlay__like-count");
 
-    const insertLikeIcon = document.createElement("i");
-    insertLikeIcon.classList.add(
+    const overlayLikeIcon = document.createElement("i");
+    overlayLikeIcon.classList.add(
       "fa-solid",
       "fa-heart",
-      "photograph-insert__like-icon"
+      "photograph-overlay__like-icon"
     );
 
-    const insertPrice = document.createElement("p");
-    insertPrice.classList.add("photograph-insert__price");
-    insertPrice.textContent = `${price}€/jour`;
+    const overlayPrice = document.createElement("p");
+    overlayPrice.classList.add("photograph-overlay__price");
+    overlayPrice.textContent = `${price}€/jour`;
 
-    insertLike.appendChild(insertLikeCount);
-    insertLike.appendChild(insertLikeIcon);
-    insert.appendChild(insertLike);
-    insert.appendChild(insertPrice);
+    overlayLike.appendChild(overlayLikeCount);
+    overlayLike.appendChild(overlayLikeIcon);
+    overlay.appendChild(overlayLike);
+    overlay.appendChild(overlayPrice);
 
     // Initialise la somme des likes
     updateTotalLikes();
 
-    return insert;
+    return overlay;
   }
+
+  function removeAccents(text) {
+    // Normaliser les accents
+    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function createForm() {
+    // Sélectionnez la div avec la classe 'modal'
+    const modalDiv = document.querySelector(".modal");
+    modalDiv.innerHTML = "";
+
+    // Créer le header
+    const header = document.createElement("header");
+    const h2 = document.createElement("h2");
+    h2.innerHTML = "Contactez-moi" + "<br>" + data.name;
+    header.appendChild(h2);
+    const img = document.createElement("img");
+    img.setAttribute("src", "./assets/icons/close.svg");
+    img.setAttribute("onclick", "closeModal()");
+    header.appendChild(img);
+    modalDiv.appendChild(header);
+
+    // Créer le formulaire
+    const form = document.createElement("form");
+    const div = document.createElement("div");
+
+    // Ajouter les champs du formulaire
+    const labels = ["Prénom", "Nom", "Email", "Votre message"];
+    labels.forEach((labelText) => {
+      const label = document.createElement("label");
+      label.innerHTML = labelText;
+      label.setAttribute("for", removeAccents(labelText));
+      label.classList.add("contact_label");
+      div.appendChild(label);
+      if (labelText === "Votre message") {
+        const textarea = document.createElement("textarea");
+        textarea.setAttribute("name", removeAccents(labelText));
+        textarea.setAttribute("id", removeAccents(labelText));
+        textarea.setAttribute("aria-label", "Entrez votre message ici :");
+        div.appendChild(textarea);
+      } else {
+        const input = document.createElement("input");
+        // Si le label est 'Email', définir le type d'input à 'email'
+        if (labelText === "Email") {
+          input.setAttribute("type", "email");
+        } else {
+          input.setAttribute("type", "text");
+        }
+        input.setAttribute("name", removeAccents(labelText));
+        input.setAttribute("id", removeAccents(labelText));
+        div.appendChild(input);
+      }
+    });
+    form.appendChild(div);
+
+    const button = document.createElement("button");
+    button.classList.add("contact_button");
+    button.innerHTML = "Envoyer";
+    form.appendChild(button);
+
+    modalDiv.appendChild(form);
+
+    return modalDiv;
+  }
+
+  // Rendre la fonction createForm accessible globalement
+  window.createForm = createForm;
 
   return {
     name,
@@ -340,6 +407,7 @@ function photographerTemplateById(data, medias) {
     getUserHeaderDOM,
     getUserSelectDOM,
     getPhotographerGalleryDOM,
-    getPhotographerInsert,
+    getPhotographerOverlay,
+    createForm,
   };
 }
