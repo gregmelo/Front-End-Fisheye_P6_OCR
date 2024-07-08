@@ -138,7 +138,7 @@ async function displayPhotographerData(photographer, media) {
     photographerModel.getPhotographerOverlay();
   } else {
     // Gestion des erreurs
-    console.error("Photographer or media not found");
+    console.error("Photographer ou media non trouvé");
   }
 }
 

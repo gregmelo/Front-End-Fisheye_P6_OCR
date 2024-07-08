@@ -13,18 +13,21 @@ function photographerTemplate(data) {
     anchor.setAttribute("href", `./photographer.html?id=${id}`);
     anchor.setAttribute("aria-label", `Voir le profil de ${name}`);
 
+    const figureimg = document.createElement("figure");
+    figureimg.classList.add("photographer_card__img");
+    figureimg.setAttribute("aria-label", `Portrait de ${name}`);
     // Créer l'image du photographe
     const img = document.createElement("img");
     img.setAttribute("src", picture);
     img.setAttribute("alt", `Portrait de ${name}`);
-
+    figureimg.appendChild(img);
     // Créer le nom du photographe
     const h2 = document.createElement("h2");
     h2.classList.add("photographer_card__name");
     h2.textContent = name;
 
     // Ajouter les éléments à la carte du photographe
-    anchor.appendChild(img);
+    anchor.appendChild(figureimg);
     anchor.appendChild(h2);
     article.appendChild(anchor);
 
@@ -193,27 +196,19 @@ function photographerTemplateById(data, medias) {
 
   // Créer la galerie pour les médias du photographe
   function getPhotographerGalleryDOM() {
-    // Sélectionner le conteneur de la galerie
     const gallery = document.querySelector(".photograph-gallery");
     gallery.innerHTML = "";
 
-    // Créer les éléments pour les photos du photographe
     const galleryContainer = document.createElement("div");
     galleryContainer.classList.add("photograph-gallery__container");
 
-    // Extraire le prénom du photographe
     const firstName = data.name.split(" ")[0];
-    console.log("Prénom du photographe :", firstName);
 
-    // Créer les modèles pour les photos
-    medias.forEach((media) => {
-      // Créer le modèle pour la photo
+    medias.forEach((media, index) => {
       const photoTemplate = document.createElement("div");
       photoTemplate.classList.add("photo-template");
 
-      // Créer l'élément pour la photo
       let mediaElement;
-      // Vérifier si la photo est une image ou une vidéo
       if (media.image) {
         mediaElement = document.createElement("img");
         mediaElement.setAttribute(
@@ -226,39 +221,36 @@ function photographerTemplateById(data, medias) {
           "src",
           `./assets/images/${firstName}/${media.video}`
         );
+        mediaElement.setAttribute("controls", "controls");
       }
-      // Ajouter les attributs communs à la photo
       mediaElement.classList.add("photo-template__photo");
+      mediaElement.classList.add("lightbox-link");
+      mediaElement?.setAttribute("id", media.id);
       mediaElement.setAttribute("alt", media.title);
       mediaElement.setAttribute("aria-label", media.title);
 
-      // Créer les éléments pour les informations de la photo
+      // mediaElement.addEventListener("click", () => openLightbox(index));
+
       const photoInfo = document.createElement("div");
       photoInfo.classList.add("photo-template__info");
 
-      // Créer l'élément pour le titre de la photo
       const photoTitle = document.createElement("span");
       photoTitle.classList.add("photo-template__title");
       photoTitle.textContent = media.title;
 
-      // Créer les éléments pour les likes
       const likeContainer = document.createElement("div");
       likeContainer.classList.add("photo-template__like-container");
 
-      // Créer l'élément pour le nombre de likes
       const likeCount = document.createElement("span");
       likeCount.classList.add("photo-template__like-count");
       likeCount.textContent = media.likes;
 
-      // Créer le bouton pour les likes
       const likeButton = document.createElement("button");
       likeButton.classList.add("photo-template__like-button");
       likeButton.setAttribute("aria-label", "Like");
 
-      // Ajouter un écouteur d'événements pour le bouton de like
       let incrementLike = true;
       likeButton.addEventListener("click", () => {
-        // Incrémenter ou décrémenter le nombre de likes
         if (incrementLike) {
           media.likes += 1;
           incrementLike = false;
@@ -266,13 +258,10 @@ function photographerTemplateById(data, medias) {
           media.likes -= 1;
           incrementLike = true;
         }
-        // Mettre à jour le nombre de likes
         likeCount.textContent = media.likes;
-        // Mettre à jour le nombre total de likes
         updateTotalLikes();
       });
 
-      // Créer l'icône pour les likes
       const likeIcon = document.createElement("i");
       likeIcon.classList.add(
         "fa-solid",
@@ -281,7 +270,6 @@ function photographerTemplateById(data, medias) {
       );
       likeIcon.setAttribute("aria-label", "Like");
 
-      // Ajouter les éléments au modèle de photo
       likeButton.appendChild(likeIcon);
       likeContainer.appendChild(likeCount);
       likeContainer.appendChild(likeButton);
@@ -290,11 +278,9 @@ function photographerTemplateById(data, medias) {
       photoInfo.appendChild(photoTitle);
       photoInfo.appendChild(likeContainer);
 
-      // Ajouter le modèle de photo au conteneur de la galerie
       galleryContainer.appendChild(photoTemplate);
     });
 
-    // Ajouter les éléments au DOM
     gallery.appendChild(galleryContainer);
 
     return galleryContainer;
@@ -334,17 +320,18 @@ function photographerTemplateById(data, medias) {
     return overlay;
   }
 
-  function removeAccents(text) {
-    // Normaliser les accents
-    return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  // Fonction de suppression des accents
+  function removeAccents(str) {
+    return str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s/g, "_");
   }
 
   function createForm() {
-    // Sélectionnez la div avec la classe 'modal'
     const modalDiv = document.querySelector(".modal");
     modalDiv.innerHTML = "";
 
-    // Créer le header
     const header = document.createElement("header");
     const h2 = document.createElement("h2");
     h2.innerHTML = "Contactez-moi" + "<br>" + data.name;
@@ -355,37 +342,58 @@ function photographerTemplateById(data, medias) {
     header.appendChild(img);
     modalDiv.appendChild(header);
 
-    // Créer le formulaire
     const form = document.createElement("form");
+    form.setAttribute("id", "contact_form");
+    form.addEventListener("submit", handleSubmit);
+
     const div = document.createElement("div");
 
-    // Ajouter les champs du formulaire
     const labels = ["Prénom", "Nom", "Email", "Votre message"];
     labels.forEach((labelText) => {
+      // Créer une div pour contenir le couple label-input
+      const containerDiv = document.createElement("div");
+      containerDiv.classList.add("input_container");
+
+      // Créer et configurer le label
       const label = document.createElement("label");
+      const id = removeAccents(labelText);
       label.innerHTML = labelText;
-      label.setAttribute("for", removeAccents(labelText));
+      label.setAttribute("for", id);
       label.classList.add("contact_label");
-      div.appendChild(label);
+      containerDiv.appendChild(label);
+
+      // Créer et configurer l'input ou textarea
       if (labelText === "Votre message") {
         const textarea = document.createElement("textarea");
-        textarea.setAttribute("name", removeAccents(labelText));
-        textarea.setAttribute("id", removeAccents(labelText));
-        textarea.setAttribute("aria-label", "Entrez votre message ici :");
-        div.appendChild(textarea);
+        textarea.setAttribute("name", id);
+        textarea.setAttribute("id", id);
+        textarea.setAttribute("aria-label", "Entrez votre message ici");
+        textarea.setAttribute("aria-required", "true");
+        textarea.setAttribute("rows", "5");
+        textarea.setAttribute("cols", "33");
+        containerDiv.appendChild(textarea);
       } else {
         const input = document.createElement("input");
-        // Si le label est 'Email', définir le type d'input à 'email'
         if (labelText === "Email") {
           input.setAttribute("type", "email");
+          input.setAttribute("aria-label", "Entrez votre adresse email");
         } else {
           input.setAttribute("type", "text");
+          input.setAttribute(
+            "aria-label",
+            `Entrez votre ${labelText.toLowerCase()}`
+          );
         }
-        input.setAttribute("name", removeAccents(labelText));
-        input.setAttribute("id", removeAccents(labelText));
-        div.appendChild(input);
+        input.setAttribute("name", id);
+        input.setAttribute("id", id);
+        input.setAttribute("aria-required", "true");
+        containerDiv.appendChild(input);
       }
+
+      // Ajouter le containerDiv au div parent
+      div.appendChild(containerDiv);
     });
+
     form.appendChild(div);
 
     const button = document.createElement("button");

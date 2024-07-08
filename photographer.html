@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
   <head>
     <link href="css/style.css" rel="stylesheet" type="text/css" />
     <meta charset="utf-8" />
@@ -13,8 +13,9 @@
       src="https://kit.fontawesome.com/2aa3c7d5e5.js"
       crossorigin="anonymous"
     ></script>
+    <link rel="stylesheet" href="./css/lightbox.css" />
   </head>
-  <body>
+  <body id="body">
     <header>
       <a href="index.html"
         ><img src="assets/images/logo.png" class="logo" alt="fisheye logo"
@@ -27,8 +28,9 @@
       <div class="photograph-overlay"></div>
     </main>
     <div id="contact_modal" class="bground">
-      <div class="modal"></div>
+      <div class="modal" id="modal"></div>
     </div>
+    <script src="./scripts/utils/lightbox.js"></script>
     <script src="./scripts/templates/photographer.js"></script>
     <script src="./scripts/pages/photographer.js"></script>
     <script src="./scripts/utils/contactForm.js"></script>
