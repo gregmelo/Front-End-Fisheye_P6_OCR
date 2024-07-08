@@ -186,6 +186,7 @@
   height: 100%;
   width: 100%;
   background-color: rgba(26, 39, 156, 0.4);
+  overflow: auto;
 }
 
 .modal {
@@ -201,6 +202,9 @@
   animation-name: modalopen;
   animation-duration: 0.8s;
   max-width: 600px;
+  height: 100vh;
+  /* overscroll-behavior-y: contain; */
+  overflow-y: auto;
 }
 
 .modal header {
@@ -281,6 +285,8 @@ form textarea {
 }
 .lightbox {
   display: none;
+  justify-content: center;
+  align-items: center;
   position: fixed;
   z-index: 1000;
   left: 0;
@@ -291,21 +297,30 @@ form textarea {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
-.lightbox-content {
+/* .lightbox-content {
   position: relative;
   margin: auto;
   padding: 0;
   width: 80%;
   max-width: 700px;
   text-align: center;
-}
+} */
 
-.lightbox-img {
+.lightbox__media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: auto;
 }
 
-.lightbox-close {
+.lightbox__title {
+  text-align: center;
+  font-size: 30px;
+  color: white;
+}
+
+.lightbox__close {
   position: absolute;
   top: 10px;
   right: 25px;
@@ -315,8 +330,8 @@ form textarea {
   cursor: pointer;
 }
 
-.lightbox-prev,
-.lightbox-next {
+.lightbox__prev,
+.lightbox__next {
   cursor: pointer;
   position: absolute;
   top: 50%;
@@ -331,10 +346,10 @@ form textarea {
   background-color: transparent;
 }
 
-.lightbox-prev {
+.lightbo__prev {
   left: 0;
 }
 
-.lightbox-next {
+.lightbo__next {
   right: 0;
 }

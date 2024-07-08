@@ -13,6 +13,8 @@ function photographerTemplate(data) {
     anchor.setAttribute("href", `./photographer.html?id=${id}`);
     anchor.setAttribute("aria-label", `Voir le profil de ${name}`);
 
+    anchor.setAttribute("role", "link");
+
     const figureimg = document.createElement("figure");
     figureimg.classList.add("photographer_card__img");
     figureimg.setAttribute("aria-label", `Portrait de ${name}`);
@@ -150,6 +152,8 @@ function photographerTemplateById(data, medias) {
     photographerSelect.setAttribute("name", "filter");
     photographerSelect.setAttribute("id", "filter");
 
+    photographerSelect.setAttribute("role", "listbox");
+
     // Créer et ajouter les options
     // Ajouter une option pour trier par popularité
     const option1 = document.createElement("option");
@@ -158,6 +162,7 @@ function photographerTemplateById(data, medias) {
     option1.setAttribute("selected", "selected");
     option1.value = "popularite";
     option1.text = "Popularité";
+    option1.setAttribute("role", "option");
     photographerSelect.appendChild(option1);
     // Ajouter une option pour trier par date
     const option2 = document.createElement("option");
@@ -165,6 +170,7 @@ function photographerTemplateById(data, medias) {
     option2.setAttribute("id", "date");
     option2.value = "date";
     option2.text = "Date";
+    option2.setAttribute("role", "option");
     photographerSelect.appendChild(option2);
     // Ajouter une option pour trier par titre
     const option3 = document.createElement("option");
@@ -172,6 +178,7 @@ function photographerTemplateById(data, medias) {
     option3.setAttribute("id", "titre");
     option3.value = "titre";
     option3.text = "Titre";
+    option3.setAttribute("role", "option");
     photographerSelect.appendChild(option3);
 
     // Ajouter le select au DOM
@@ -221,15 +228,13 @@ function photographerTemplateById(data, medias) {
           "src",
           `./assets/images/${firstName}/${media.video}`
         );
-        mediaElement.setAttribute("controls", "controls");
       }
       mediaElement.classList.add("photo-template__photo");
       mediaElement.classList.add("lightbox-link");
       mediaElement?.setAttribute("id", media.id);
       mediaElement.setAttribute("alt", media.title);
       mediaElement.setAttribute("aria-label", media.title);
-
-      // mediaElement.addEventListener("click", () => openLightbox(index));
+      mediaElement.setAttribute("tabindex", "0");
 
       const photoInfo = document.createElement("div");
       photoInfo.classList.add("photo-template__info");
@@ -248,14 +253,17 @@ function photographerTemplateById(data, medias) {
       const likeButton = document.createElement("button");
       likeButton.classList.add("photo-template__like-button");
       likeButton.setAttribute("aria-label", "Like");
+      likeButton.setAttribute("aria-pressed", "false");
 
       let incrementLike = true;
       likeButton.addEventListener("click", () => {
         if (incrementLike) {
           media.likes += 1;
+          likeButton.setAttribute("aria-pressed", "true");
           incrementLike = false;
         } else {
           media.likes -= 1;
+          likeButton.setAttribute("aria-pressed", "false");
           incrementLike = true;
         }
         likeCount.textContent = media.likes;
@@ -304,6 +312,7 @@ function photographerTemplateById(data, medias) {
       "fa-heart",
       "photograph-overlay__like-icon"
     );
+    overlayLikeIcon.setAttribute("aria-hidden", "true");
 
     const overlayPrice = document.createElement("p");
     overlayPrice.classList.add("photograph-overlay__price");
@@ -339,12 +348,15 @@ function photographerTemplateById(data, medias) {
     const img = document.createElement("img");
     img.setAttribute("src", "./assets/icons/close.svg");
     img.setAttribute("onclick", "closeModal()");
+    img.setAttribute("alt", "Fermer le formulaire de contact");
+    img.setAttribute("aria-label", "Fermer le formulaire de contact");
     header.appendChild(img);
     modalDiv.appendChild(header);
 
     const form = document.createElement("form");
     form.setAttribute("id", "contact_form");
     form.addEventListener("submit", handleSubmit);
+    form.setAttribute("aria-labelledby", "contactez-moi");
 
     const div = document.createElement("div");
 
@@ -399,6 +411,7 @@ function photographerTemplateById(data, medias) {
     const button = document.createElement("button");
     button.classList.add("contact_button");
     button.innerHTML = "Envoyer";
+    button.setAttribute("aria-label", "Envoyer le formulaire de contact");
     form.appendChild(button);
 
     modalDiv.appendChild(form);
