@@ -152,14 +152,16 @@ class Lightbox {
     dom.setAttribute("role", "dialog");
     dom.setAttribute("aria-modal", "true");
     dom.setAttribute("aria-label", "Image en plein écran");
-    dom.style.display = "block";
+    // dom.style.display = "block";
     document.body.classList.add("no-scroll");
     //aria-live="polite" indique que le contenu est dynamique (peu changé) et doit être annoncé par un lecteur d'écran
     dom.innerHTML = `
       <button class="lightbox__close" aria-label="Fermer la lightbox"></button>
       <button class="lightbox__prev" aria-label="Image précédente"></button>
-      <div class="lightbox__media" role="document"></div>
-      <p class="lightbox__title" aria-live="polite"></p> 
+      <div class="lightbox__content">
+      <figure class="lightbox__media" role="document"></figure>
+      <h3 class="lightbox__title" aria-live="polite"></h3>
+      </div> 
       <button class="lightbox__next" aria-label="Image suivante"></button>
     `;
     dom
