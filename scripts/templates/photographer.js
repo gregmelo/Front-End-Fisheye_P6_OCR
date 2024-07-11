@@ -1,6 +1,7 @@
 function photographerTemplate(data) {
   // Extraire les informations du photographe
   const { name, id, portrait, city, country, tagline, price } = data;
+  console.log("Photographer :", data);
   // Créer le chemin de l'image
   const picture = `./assets/photographers/${portrait}`;
   // Créer le template pour la carte du photographe
@@ -20,6 +21,11 @@ function photographerTemplate(data) {
     figureimg.setAttribute("aria-label", `Portrait de ${name}`);
     // Créer l'image du photographe
     const img = document.createElement("img");
+    if (id === 243) {
+      img.classList.add("photographer_card__img--ellie");
+    } else if (id === 82) {
+      img.classList.add("photographer_card__img--tracy");
+    }
     img.setAttribute("src", picture);
     img.setAttribute("alt", `Portrait de ${name}`);
     figureimg.appendChild(img);

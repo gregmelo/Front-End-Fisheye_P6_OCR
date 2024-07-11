@@ -49,9 +49,8 @@ main {
 .photographer_section article img {
   height: 350px;
   width: auto;
-  object-fit: cover;
-  object-position: center center;
-  transform-origin: center center;
+  position: relative;
+  top: 32px;
 }
 .photographer_card__img {
   height: 200px;
@@ -61,6 +60,17 @@ main {
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+}
+.photographer_section article .photographer_card__img--ellie {
+  position: relative;
+  top: 0;
+  right: 15px;
+}
+.photographer_section article .photographer_card__img--tracy {
+  position: relative;
+  top: 0;
+  left: 25px;
+  height: 250px;
 }
 .photographer_card__name {
   color: #d3573c;

@@ -42,6 +42,8 @@
   height: 200px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center center;
+  transform-origin: center center;
 }
 
 .contact_button {
@@ -202,8 +204,6 @@
   animation-name: modalopen;
   animation-duration: 0.8s;
   max-width: 600px;
-  /* height: 100vh; */
-  /* overscroll-behavior-y: contain; */
   overflow-y: auto;
 }
 
@@ -283,73 +283,3 @@ form textarea {
     opacity: 1;
   }
 }
-/* .lightbox {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: white;
-}
-
-/* .lightbox-content {
-  position: relative;
-  margin: auto;
-  padding: 0;
-  width: 80%;
-  max-width: 700px;
-  text-align: center;
-} */
-
-/*.lightbox__media {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: auto;
-}
-
-.lightbox__title {
-  text-align: center;
-  font-size: 30px;
-  color: #901c1c;
-}
-
-.lightbox__close {
-  position: absolute;
-  top: 10px;
-  right: 25px;
-  color: #901c1c;
-  font-size: 35px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.lightbox__prev,
-.lightbox__next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%;
-  width: auto;
-  padding: 16px;
-  margin-top: -22px;
-  color: #901c1c;
-  font-weight: bold;
-  font-size: 20px;
-  transition: 0.6s ease;
-  border: none;
-  background-color: transparent;
-}
-
-.lightbo__prev {
-  left: 0;
-}
-
-.lightbo__next {
-  right: 0;
-} */
