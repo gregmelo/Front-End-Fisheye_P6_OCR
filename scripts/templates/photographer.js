@@ -319,6 +319,7 @@ function photographerTemplateById(data, medias) {
       "photograph-overlay__like-icon"
     );
     overlayLikeIcon.setAttribute("aria-hidden", "true");
+    overlayLikeIcon.setAttribute("aria-label", "Like");
 
     const overlayPrice = document.createElement("p");
     overlayPrice.classList.add("photograph-overlay__price");

@@ -175,6 +175,7 @@
 }
 .photograph-overlay i {
   color: black;
+  cursor: auto;
 }
 
 #contact_modal {
