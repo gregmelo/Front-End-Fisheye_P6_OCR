@@ -217,7 +217,7 @@ function photographerTemplateById(data, medias) {
 
     const firstName = data.name.split(" ")[0];
 
-    medias.forEach((media, index) => {
+    medias.forEach((media) => {
       const photoTemplate = document.createElement("div");
       photoTemplate.classList.add("photo-template");
 

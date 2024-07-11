@@ -51,7 +51,7 @@ class Lightbox {
     const loader = document.createElement("div");
     loader.classList.add("lightbox__loader");
     container.innerHTML = "";
-    container.appendChild(loader);
+    container?.appendChild(loader);
 
     // Déterminer si le média est une image ou une vidéo
     const isImage = mediaSrc.match(/\.(jpeg|jpg|gif|png)$/) !== null;
@@ -99,6 +99,17 @@ class Lightbox {
       this.next(e);
     } else if (e.key === "ArrowLeft") {
       this.prev(e);
+    }else if (e.key === " ") { // Gestion de la barre d'espace
+      e.preventDefault();
+      const container = this.element.querySelector(".lightbox__media");
+      const video = container.querySelector("video");
+      if (video) {
+        if (video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      }
     }
   }
 
