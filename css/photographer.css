@@ -57,6 +57,12 @@
   background-color: #901c1c;
   border-radius: 5px;
   cursor: pointer;
+  transition: color 0.3s, background-color 0.3s;
+}
+.contact_button:hover,
+.contact_button:focus {
+  color: black;
+  background-color: #db8876;
 }
 
 .photograph-select {
