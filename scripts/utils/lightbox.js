@@ -99,7 +99,8 @@ class Lightbox {
       this.next(e);
     } else if (e.key === "ArrowLeft") {
       this.prev(e);
-    }else if (e.key === " ") { // Gestion de la barre d'espace
+    } else if (e.key === " ") {
+      // Gestion de la barre d'espace
       e.preventDefault();
       const container = this.element.querySelector(".lightbox__media");
       const video = container.querySelector("video");

@@ -124,7 +124,11 @@ function photographerTemplateById(data, medias) {
     img.setAttribute("alt", `Portrait de ${name}`);
     img.setAttribute("aira-label", `Portrait de ${name}`);
     img.classList.add("photographer_portrait");
-
+    if (id === 243) {
+      img.classList.add("photographer_portrait--ellie");
+    } else if (id === 82) {
+      img.classList.add("photographer_portrait--tracy");
+    }
     imgContainer.appendChild(img);
 
     // Créer le bouton de contact
@@ -204,6 +208,7 @@ function photographerTemplateById(data, medias) {
         medias.sort((a, b) => a.title.localeCompare(b.title));
       }
       getPhotographerGalleryDOM();
+      Lightbox.init();
     });
   }
 

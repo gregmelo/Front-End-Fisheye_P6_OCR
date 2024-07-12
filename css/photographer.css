@@ -37,13 +37,31 @@
   color: #525252;
 }
 
-.photographer_portrait {
-  width: 200px;
+.photographer_img_container {
   height: 200px;
+  width: 200px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-radius: 50%;
-  object-fit: cover;
-  object-position: center center;
-  transform-origin: center center;
+}
+.photographer_portrait {
+  height: 350px;
+  width: auto;
+  position: relative;
+  top: 32px;
+}
+.photographer_img_container .photographer_portrait--ellie {
+  position: relative;
+  top: 0;
+  right: 15px;
+}
+.photographer_img_container .photographer_portrait--tracy {
+  position: relative;
+  top: 0;
+  left: 25px;
+  height: 250px;
 }
 
 .contact_button {
