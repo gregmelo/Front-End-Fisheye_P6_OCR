@@ -40,6 +40,12 @@ class Lightbox {
     this.onKeyUp = this.onKeyUp.bind(this);
     document.body.appendChild(this.element);
     document.addEventListener("keyup", this.onKeyUp);
+
+    // Mettre le focus sur le bouton de fermeture une fois la lightbox ajoutée au DOM
+    const closeButton = this.element.querySelector(".lightbox__close");
+    closeButton.focus();
+
+    document.addEventListener("keyup", this.onKeyUp);
   }
 
   /**
@@ -168,13 +174,13 @@ class Lightbox {
     document.body.classList.add("no-scroll");
     //aria-live="polite" indique que le contenu est dynamique (peu changé) et doit être annoncé par un lecteur d'écran
     dom.innerHTML = `
-      <button class="lightbox__close" aria-label="Fermer la lightbox"></button>
-      <button class="lightbox__prev" aria-label="Image précédente"></button>
+      <button class="lightbox__close" aria-label="Fermer la lightbox" tabindex="0"></button>
+      <button class="lightbox__prev" aria-label="Image précédente" tabindex="0"></button>
       <div class="lightbox__content">
       <figure class="lightbox__media" role="document"></figure>
       <h3 class="lightbox__title" aria-live="polite"></h3>
       </div> 
-      <button class="lightbox__next" aria-label="Image suivante"></button>
+      <button class="lightbox__next" aria-label="Image suivante" tabindex="0"></button>
     `;
     dom
       .querySelector(".lightbox__close")
