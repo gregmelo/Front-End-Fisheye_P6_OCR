@@ -85,8 +85,8 @@ export class Lightbox {
       const video = document.createElement("video");
       video.controls = true;
       video.onloadeddata = () => {
-        container?.removeChild(loader);
-        container?.appendChild(video);
+        container.removeChild(loader);
+        container.appendChild(video);
         this.media = mediaSrc;
       };
       video.src = mediaSrc;
