@@ -1,7 +1,7 @@
 // @ts-nocheck
-import {createForm} from "../templates/photographer.js";
 
-function displayModal() {
+export function displayModal() {
+  console.log("displayModal a été appelée");
   const modal = document.getElementById("contact_modal");
   modal.style.display = "block";
   modal.setAttribute("aria-hidden", "false");
@@ -9,12 +9,12 @@ function displayModal() {
   modal.setAttribute("aria-modal", "true");
   modal.setAttribute("aria-labelledby", "modalTitle");
   modal.setAttribute("aria-describedby", "modalDescription");
-  // Appel la fonction createForm définie globalement
-  if (typeof createForm === "function") {
-    createForm();
-  } else {
-    console.error("createForm n'est pas définie.");
-  }
+  // // Appel la fonction createForm définie globalement
+  // if (typeof createForm === "function") {
+  //   createForm();
+  // } else {
+  //   console.error("createForm n'est pas définie.");
+  // }
 
   const bodyContent = document.getElementById("body");
   bodyContent.setAttribute("aria-hidden", "true");
@@ -146,7 +146,7 @@ function validateForm() {
   return isFirstNameLastNameValid && isEmailValid && isMessageValid;
 }
 
- export function handleSubmit(event) {
+export function handleSubmit(event) {
   event.preventDefault();
   if (validateForm()) {
     const formData = new FormData(event.target);
@@ -166,3 +166,5 @@ function validateForm() {
     closeModal,
   };
 }
+window.displayModal = displayModal;
+window.closeModal = closeModal;
