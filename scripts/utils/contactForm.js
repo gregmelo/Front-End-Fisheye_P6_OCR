@@ -3,6 +3,12 @@
 export function displayModal() {
   console.log("displayModal a été appelée");
   const modal = document.getElementById("contact_modal");
+  if (!modal) {
+    console.warn(
+      "Le modal avec l'ID 'contact_modal' est introuvable sur cette page."
+    );
+    return; // Arrête la fonction si le modal n'existe pas
+  }
   modal.style.display = "block";
   modal.setAttribute("aria-hidden", "false");
   modal.setAttribute("role", "dialog");
@@ -30,6 +36,12 @@ export function displayModal() {
 
 function closeModal() {
   const modal = document.getElementById("contact_modal");
+  if (!modal) {
+    console.warn(
+      "Le modal avec l'ID 'contact_modal' est introuvable sur cette page."
+    );
+    return; // Arrête la fonction si le modal n'existe pas
+  }
   modal.style.display = "none";
   modal.setAttribute("aria-hidden", "true");
 
@@ -46,11 +58,11 @@ function closeModal() {
 
 // Fermer le modal en cliquant sur le bouton de fermeture grace à la touche echap
 document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape") {
-    closeModal();
-  }
   const modal = document.getElementById("contact_modal");
-  if (modal.style.display === "block" && event.key === "Tab") {
+  if (modal && modal.style.display === "block") {
+    if (event.key === "Escape") {
+      closeModal();
+    }
     const focusableElements = modal.querySelectorAll(
       "img, button, input, textarea"
     );
@@ -166,5 +178,6 @@ export function handleSubmit(event) {
     closeModal,
   };
 }
+
 window.displayModal = displayModal;
 window.closeModal = closeModal;
