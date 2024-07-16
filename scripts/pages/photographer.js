@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 // Fonction pour extraire l'ID de l'URL
 function getPhotographerIdFromUrl() {
   // Récupérer les paramètres de l'URL

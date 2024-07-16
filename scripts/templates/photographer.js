@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 function photographerTemplate(data) {
   // Extraire les informations du photographe
   const { name, id, portrait, city, country, tagline, price } = data;

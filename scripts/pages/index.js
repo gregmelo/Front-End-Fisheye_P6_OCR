@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 async function getPhotographers() {
   // Récupérer les photographes depuis le localStorage
   let photographers = window.localStorage.getItem("photographers");

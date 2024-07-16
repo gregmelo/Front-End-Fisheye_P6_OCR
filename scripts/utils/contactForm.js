@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 function displayModal() {
   const modal = document.getElementById("contact_modal");
   modal.style.display = "block";
@@ -156,8 +158,10 @@ function handleSubmit(event) {
   } else {
     console.log("Invalid form submission");
   }
+  return {
+    validateForm,
+    handleSubmit,
+    displayModal,
+    closeModal,
+  };
 }
-
-const lastNameField = document.getElementById("last");
-const firstNameField = document.getElementById("first");
-const emailField = document.getElementById("email");

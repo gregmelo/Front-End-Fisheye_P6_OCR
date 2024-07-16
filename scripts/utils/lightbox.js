@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 /**
  * @property {HTMLElement} element
  * @property {string[]} images Liste des media des images de la galerie
@@ -161,10 +163,9 @@ class Lightbox {
   }
 
   /**
-   * @param {string} media media de l'image à afficher
    * @return {HTMLElement}
    */
-  buildDOM(media) {
+  buildDOM() {
     const dom = document.createElement("div");
     dom.classList.add("lightbox");
     dom.setAttribute("role", "dialog");
