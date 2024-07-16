@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { photographerTemplate } from "../templates/photographer.js";
 
 async function getPhotographers() {
   // Récupérer les photographes depuis le localStorage
@@ -34,6 +35,7 @@ async function getPhotographers() {
 
 // Modèle de la carte utilisateur
 async function displayData(data) {
+  console.log("Data:", data);
   // Vérifier si les données sont correctes
   if (!data || !data.photographers) {
     // Gestion des erreurs

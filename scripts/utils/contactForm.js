@@ -1,4 +1,5 @@
 // @ts-nocheck
+import {createForm} from "../templates/photographer.js";
 
 function displayModal() {
   const modal = document.getElementById("contact_modal");
@@ -145,7 +146,7 @@ function validateForm() {
   return isFirstNameLastNameValid && isEmailValid && isMessageValid;
 }
 
-function handleSubmit(event) {
+ export function handleSubmit(event) {
   event.preventDefault();
   if (validateForm()) {
     const formData = new FormData(event.target);

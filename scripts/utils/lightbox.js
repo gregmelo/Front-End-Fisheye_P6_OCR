@@ -6,7 +6,7 @@
  * @property {string} src src de l'image actuellement affichée
  *
  */
-class Lightbox {
+export class Lightbox {
   static init() {
     const links = Array.from(document.querySelectorAll(".lightbox-link"));
     const gallery = links.map((media) => {

@@ -1,6 +1,8 @@
 // @ts-nocheck
+import { handleSubmit } from "../utils/contactForm.js";
+import { Lightbox } from "../utils/lightbox.js";
 
-function photographerTemplate(data) {
+export function photographerTemplate(data) {
   // Extraire les informations du photographe
   const { name, id, portrait, city, country, tagline, price } = data;
   console.log("Photographer :", data);
@@ -30,6 +32,7 @@ function photographerTemplate(data) {
     }
     img.setAttribute("src", picture);
     img.setAttribute("alt", `Portrait de ${name}`);
+    img.classList.add("photographer_card__img--img");
     figureimg.appendChild(img);
     // Créer le nom du photographe
     const h2 = document.createElement("h2");
@@ -64,7 +67,7 @@ function photographerTemplate(data) {
   return { name, picture, getUserCardDOM };
 }
 
-function photographerTemplateById(data, medias) {
+export function photographerTemplateById(data, medias) {
   // Extraire les informations du photographe
   const { name, id, portrait, city, country, tagline, price } = data;
   const picture = `./assets/photographers/${portrait}`;
@@ -343,95 +346,87 @@ function photographerTemplateById(data, medias) {
     return overlay;
   }
 
-  // Fonction de suppression des accents
-  function removeAccents(str) {
-    return str
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/\s/g, "_");
-  }
+  // function createForm() {
+  //     const modalDiv = document.querySelector(".modal");
+  //     modalDiv.innerHTML = "";
 
-  function createForm() {
-    const modalDiv = document.querySelector(".modal");
-    modalDiv.innerHTML = "";
+  //     const header = document.createElement("header");
+  //     const h2 = document.createElement("h2");
+  //     h2.innerHTML = "Contactez-moi" + "<br>" + data.name;
+  //     header.appendChild(h2);
+  //     const img = document.createElement("img");
+  //     img.setAttribute("src", "./assets/icons/close.svg");
+  //     img.setAttribute("onclick", "closeModal()");
+  //     img.setAttribute("alt", "Fermer le formulaire de contact");
+  //     img.setAttribute("aria-label", "Fermer le formulaire de contact");
+  //     header.appendChild(img);
+  //     modalDiv.appendChild(header);
 
-    const header = document.createElement("header");
-    const h2 = document.createElement("h2");
-    h2.innerHTML = "Contactez-moi" + "<br>" + data.name;
-    header.appendChild(h2);
-    const img = document.createElement("img");
-    img.setAttribute("src", "./assets/icons/close.svg");
-    img.setAttribute("onclick", "closeModal()");
-    img.setAttribute("alt", "Fermer le formulaire de contact");
-    img.setAttribute("aria-label", "Fermer le formulaire de contact");
-    header.appendChild(img);
-    modalDiv.appendChild(header);
+  //     const form = document.createElement("form");
+  //     form.setAttribute("id", "contact_form");
+  //     form.addEventListener("submit", handleSubmit);
+  //     form.setAttribute("aria-labelledby", "contactez-moi");
 
-    const form = document.createElement("form");
-    form.setAttribute("id", "contact_form");
-    form.addEventListener("submit", handleSubmit);
-    form.setAttribute("aria-labelledby", "contactez-moi");
+  //     const div = document.createElement("div");
 
-    const div = document.createElement("div");
+  //     const labels = ["Prénom", "Nom", "Email", "Votre message"];
+  //     labels.forEach((labelText) => {
+  //       // Créer une div pour contenir le couple label-input
+  //       const containerDiv = document.createElement("div");
+  //       containerDiv.classList.add("input_container");
 
-    const labels = ["Prénom", "Nom", "Email", "Votre message"];
-    labels.forEach((labelText) => {
-      // Créer une div pour contenir le couple label-input
-      const containerDiv = document.createElement("div");
-      containerDiv.classList.add("input_container");
+  //       // Créer et configurer le label
+  //       const label = document.createElement("label");
+  //       const id = removeAccents(labelText);
+  //       label.innerHTML = labelText;
+  //       label.setAttribute("for", id);
+  //       label.classList.add("contact_label");
+  //       containerDiv.appendChild(label);
 
-      // Créer et configurer le label
-      const label = document.createElement("label");
-      const id = removeAccents(labelText);
-      label.innerHTML = labelText;
-      label.setAttribute("for", id);
-      label.classList.add("contact_label");
-      containerDiv.appendChild(label);
+  //       // Créer et configurer l'input ou textarea
+  //       if (labelText === "Votre message") {
+  //         const textarea = document.createElement("textarea");
+  //         textarea.setAttribute("name", id);
+  //         textarea.setAttribute("id", id);
+  //         textarea.setAttribute("aria-label", "Entrez votre message ici");
+  //         textarea.setAttribute("aria-required", "true");
+  //         textarea.setAttribute("rows", "5");
+  //         textarea.setAttribute("cols", "33");
+  //         containerDiv.appendChild(textarea);
+  //       } else {
+  //         const input = document.createElement("input");
+  //         if (labelText === "Email") {
+  //           input.setAttribute("type", "email");
+  //           input.setAttribute("aria-label", "Entrez votre adresse email");
+  //         } else {
+  //           input.setAttribute("type", "text");
+  //           input.setAttribute(
+  //             "aria-label",
+  //             `Entrez votre ${labelText.toLowerCase()}`
+  //           );
+  //         }
+  //         input.setAttribute("name", id);
+  //         input.setAttribute("id", id);
+  //         input.setAttribute("aria-required", "true");
+  //         containerDiv.appendChild(input);
+  //       }
 
-      // Créer et configurer l'input ou textarea
-      if (labelText === "Votre message") {
-        const textarea = document.createElement("textarea");
-        textarea.setAttribute("name", id);
-        textarea.setAttribute("id", id);
-        textarea.setAttribute("aria-label", "Entrez votre message ici");
-        textarea.setAttribute("aria-required", "true");
-        textarea.setAttribute("rows", "5");
-        textarea.setAttribute("cols", "33");
-        containerDiv.appendChild(textarea);
-      } else {
-        const input = document.createElement("input");
-        if (labelText === "Email") {
-          input.setAttribute("type", "email");
-          input.setAttribute("aria-label", "Entrez votre adresse email");
-        } else {
-          input.setAttribute("type", "text");
-          input.setAttribute(
-            "aria-label",
-            `Entrez votre ${labelText.toLowerCase()}`
-          );
-        }
-        input.setAttribute("name", id);
-        input.setAttribute("id", id);
-        input.setAttribute("aria-required", "true");
-        containerDiv.appendChild(input);
-      }
+  //       // Ajouter le containerDiv au div parent
+  //       div.appendChild(containerDiv);
+  //     });
 
-      // Ajouter le containerDiv au div parent
-      div.appendChild(containerDiv);
-    });
+  //     form.appendChild(div);
 
-    form.appendChild(div);
+  //     const button = document.createElement("button");
+  //     button.classList.add("contact_button");
+  //     button.innerHTML = "Envoyer";
+  //     button.setAttribute("aria-label", "Envoyer le formulaire de contact");
+  //     form.appendChild(button);
 
-    const button = document.createElement("button");
-    button.classList.add("contact_button");
-    button.innerHTML = "Envoyer";
-    button.setAttribute("aria-label", "Envoyer le formulaire de contact");
-    form.appendChild(button);
+  //     modalDiv.appendChild(form);
 
-    modalDiv.appendChild(form);
-
-    return modalDiv;
-  }
+  //     return modalDiv;
+  //   }
 
   // Rendre la fonction createForm accessible globalement
   window.createForm = createForm;
@@ -443,6 +438,93 @@ function photographerTemplateById(data, medias) {
     getUserSelectDOM,
     getPhotographerGalleryDOM,
     getPhotographerOverlay,
-    createForm,
+    // createForm,
   };
+} // Fonction de suppression des accents
+function removeAccents(str) {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s/g, "_");
+}
+export function createForm(data) {
+  const modalDiv = document.querySelector(".modal");
+  modalDiv.innerHTML = "";
+
+  const header = document.createElement("header");
+  const h2 = document.createElement("h2");
+  h2.innerHTML = "Contactez-moi" + "<br>" + data.name;
+  header.appendChild(h2);
+  const img = document.createElement("img");
+  img.setAttribute("src", "./assets/icons/close.svg");
+  img.setAttribute("onclick", "closeModal()");
+  img.setAttribute("alt", "Fermer le formulaire de contact");
+  img.setAttribute("aria-label", "Fermer le formulaire de contact");
+  header.appendChild(img);
+  modalDiv.appendChild(header);
+
+  const form = document.createElement("form");
+  form.setAttribute("id", "contact_form");
+  form.addEventListener("submit", handleSubmit);
+  form.setAttribute("aria-labelledby", "contactez-moi");
+
+  const div = document.createElement("div");
+
+  const labels = ["Prénom", "Nom", "Email", "Votre message"];
+  labels.forEach((labelText) => {
+    // Créer une div pour contenir le couple label-input
+    const containerDiv = document.createElement("div");
+    containerDiv.classList.add("input_container");
+
+    // Créer et configurer le label
+    const label = document.createElement("label");
+    const id = removeAccents(labelText);
+    label.innerHTML = labelText;
+    label.setAttribute("for", id);
+    label.classList.add("contact_label");
+    containerDiv.appendChild(label);
+
+    // Créer et configurer l'input ou textarea
+    if (labelText === "Votre message") {
+      const textarea = document.createElement("textarea");
+      textarea.setAttribute("name", id);
+      textarea.setAttribute("id", id);
+      textarea.setAttribute("aria-label", "Entrez votre message ici");
+      textarea.setAttribute("aria-required", "true");
+      textarea.setAttribute("rows", "5");
+      textarea.setAttribute("cols", "33");
+      containerDiv.appendChild(textarea);
+    } else {
+      const input = document.createElement("input");
+      if (labelText === "Email") {
+        input.setAttribute("type", "email");
+        input.setAttribute("aria-label", "Entrez votre adresse email");
+      } else {
+        input.setAttribute("type", "text");
+        input.setAttribute(
+          "aria-label",
+          `Entrez votre ${labelText.toLowerCase()}`
+        );
+      }
+      input.setAttribute("name", id);
+      input.setAttribute("id", id);
+      input.setAttribute("aria-required", "true");
+      containerDiv.appendChild(input);
+    }
+
+    // Ajouter le containerDiv au div parent
+    div.appendChild(containerDiv);
+  });
+
+  form.appendChild(div);
+
+  const button = document.createElement("button");
+  button.classList.add("contact_button");
+  button.innerHTML = "Envoyer";
+  button.setAttribute("aria-label", "Envoyer le formulaire de contact");
+  form.appendChild(button);
+
+  modalDiv.appendChild(form);
+
+  return modalDiv;
 }

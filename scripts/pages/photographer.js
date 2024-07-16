@@ -1,4 +1,5 @@
 // @ts-nocheck
+import { photographerTemplateById } from "../templates/photographer.js";
 
 // Fonction pour extraire l'ID de l'URL
 function getPhotographerIdFromUrl() {
