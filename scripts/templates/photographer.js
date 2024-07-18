@@ -382,6 +382,7 @@ export function createForm(data) {
   const form = document.createElement("form");
   form.setAttribute("id", "contact_form");
   form.addEventListener("submit", handleSubmit);
+
   form.setAttribute("aria-labelledby", "contactez-moi");
 
   const div = document.createElement("div");
@@ -436,6 +437,8 @@ export function createForm(data) {
 
   const button = document.createElement("button");
   button.classList.add("contact_button");
+  button.setAttribute("type", "submit");
+  button.setAttribute("id", "sendButton");
   button.innerHTML = "Envoyer";
   button.setAttribute("aria-label", "Envoyer le formulaire de contact");
   form.appendChild(button);
@@ -444,5 +447,5 @@ export function createForm(data) {
 
   return modalDiv;
 }
-  // Rendre la fonction createForm accessible globalement
-  window.createForm = createForm;
+// Rendre la fonction createForm accessible globalement
+window.createForm = createForm;

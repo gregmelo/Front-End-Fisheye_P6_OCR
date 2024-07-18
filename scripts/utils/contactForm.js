@@ -15,12 +15,6 @@ export function displayModal() {
   modal.setAttribute("aria-modal", "true");
   modal.setAttribute("aria-labelledby", "modalTitle");
   modal.setAttribute("aria-describedby", "modalDescription");
-  // // Appel la fonction createForm définie globalement
-  // if (typeof createForm === "function") {
-  //   createForm();
-  // } else {
-  //   console.error("createForm n'est pas définie.");
-  // }
 
   const bodyContent = document.getElementById("body");
   bodyContent.setAttribute("aria-hidden", "true");
@@ -160,14 +154,16 @@ function validateForm() {
 
 export function handleSubmit(event) {
   event.preventDefault();
+  const form = document.querySelector("form");
   if (validateForm()) {
-    const formData = new FormData(event.target);
+    const formData = new FormData(form);
     console.log("Form Data:");
+    // Parcourt toutes les entrées du formulaire et les affiche dans la console.
     for (let [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
     }
     closeModal();
-    event.target.reset();
+    form.reset();
   } else {
     console.log("Invalid form submission");
   }
@@ -181,3 +177,17 @@ export function handleSubmit(event) {
 
 window.displayModal = displayModal;
 window.closeModal = closeModal;
+document.addEventListener("DOMContentLoaded", function () {
+  const button = document.getElementById("sendButton");
+
+  // Ajoutez un écouteur d'événements keydown
+  button.addEventListener("keydown", function (event) {
+    // Vérifiez si la touche pressée est Enter
+    if (event.key === "Enter") {
+      // Empêchez le comportement par défaut (clic sur le bouton)
+      event.preventDefault();
+      // Déclenchez la fonction handleSubmit
+      handleSubmit(event);
+    }
+  });
+});
