@@ -177,17 +177,24 @@ export function handleSubmit(event) {
 
 window.displayModal = displayModal;
 window.closeModal = closeModal;
+
 document.addEventListener("DOMContentLoaded", function () {
   const button = document.getElementById("sendButton");
-
-  // Ajoutez un écouteur d'événements keydown
-  button.addEventListener("keydown", function (event) {
-    // Vérifiez si la touche pressée est Enter
-    if (event.key === "Enter") {
-      // Empêchez le comportement par défaut (clic sur le bouton)
-      event.preventDefault();
-      // Déclenchez la fonction handleSubmit
-      handleSubmit(event);
-    }
-  });
+button!== null ?
+listenerButton(button) : null;
 });
+
+function listenerButton(button) {
+  console.log("Button", button)
+    // écouteur d'événements keydown
+    button.addEventListener("keydown", function (event) {
+      // Vérifie si la touche pressée est Enter
+      if (event.key === "Enter") {
+        // Empêche le comportement par défaut (clic sur le bouton)
+        event.preventDefault();
+        // Déclenche la fonction handleSubmit
+        handleSubmit(event);
+      }
+    })
+}
+
