@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { photographerTemplate } from "../templates/photographer.js";
+import { photographerTemplate } from "../templates/photographerTemplate.js";
 
 async function getPhotographers() {
   // Récupérer les photographes depuis le localStorage

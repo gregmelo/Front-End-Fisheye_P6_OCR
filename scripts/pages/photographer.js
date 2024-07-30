@@ -1,5 +1,6 @@
 // @ts-nocheck
-import { photographerTemplateById, createForm } from "../templates/photographer.js";
+import { photographerTemplateById} from "../templates/photographerTemplate.js";
+import { createForm } from "../templates/contactForm.js";
 
 export class PhotographerPage {
   constructor() {
