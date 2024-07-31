@@ -7,8 +7,8 @@ body {
 }
 
 :focus {
-  outline: 3px solid #d3573c; /* Changer la couleur et la taille de la bordure */
-  outline-offset: 2px; /* Ajouter un espace entre l'élément et la bordure */
+  outline: 3px solid #d3573c; 
+  outline-offset: 2px; 
 }
 
 a {
