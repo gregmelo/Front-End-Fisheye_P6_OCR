@@ -3,6 +3,8 @@
 // @ts-nocheck
 import { updateTotalLikes } from "../utils/totalLikes.js";
 
+let allMedias = [];
+
 // Déclaration de la classe Media qui représente un média (image ou vidéo) dans la galerie
 export class Media {
   // Constructeur de la classe Media
@@ -14,14 +16,17 @@ export class Media {
     this.video = data.video;
     this.likes = data.likes;
     this.firstName = firstName; // Nom du photographe pour structurer le chemin des fichiers
+
+    // Ajoutez chaque instance à la liste globale
+    allMedias.push(this);
   }
 
   // Crée l'élément HTML pour le média (image ou vidéo)
   createMediaElement() {
     let mediaElement;
     // Chemin du média en fonction du nom du photographe
-    const mediaLink = `./assets/images/${this.firstName}/`
-    
+    const mediaLink = `./assets/images/${this.firstName}/`;
+
     // Vérifie si le média est une image
     if (this.image) {
       mediaElement = document.createElement("img");
@@ -65,7 +70,7 @@ export class Media {
       }
       likeCount.textContent = this.likes; // Met à jour le nombre de likes affiché
       // Appelle une fonction pour mettre à jour les likes totaux
-      updateTotalLikes();
+      updateTotalLikes(allMedias);
     });
 
     // Crée l'icône de like (cœur)
@@ -95,10 +100,11 @@ export class Media {
     const likeContainer = document.createElement("div");
     likeContainer.classList.add("photo-template__like-container");
 
+    console.log("this.likes", this.likes); // Débogage : affiche le nombre de likes du média
     const likeCount = document.createElement("span");
     likeCount.classList.add("photo-template__like-count");
     likeCount.textContent = this.likes; // Définit le nombre de likes du média
-
+    likeContainer.appendChild(likeCount); // Ajoute le nombre de likes au conteneur de likes
     this.createLikeButton(likeContainer, likeCount); // Crée et ajoute le bouton de like
 
     photoInfo.appendChild(photoTitle); // Ajoute le titre au conteneur d'informations
