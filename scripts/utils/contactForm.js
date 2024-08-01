@@ -16,8 +16,10 @@ export function displayModal() {
   modal.setAttribute("aria-labelledby", "modalTitle");
   modal.setAttribute("aria-describedby", "modalDescription");
 
-  const bodyContent = document.getElementById("body");
-  bodyContent.setAttribute("aria-hidden", "true");
+  const headerContent = document.getElementById("header");
+  headerContent.setAttribute("aria-hidden", "true");
+  const mainContent = document.getElementById("main");
+  mainContent.setAttribute("aria-hidden", "true");
 
   // Focus sur le premier élément de la modal
   const focusableElements = modal.querySelectorAll(
@@ -40,8 +42,10 @@ function closeModal() {
   modal.setAttribute("aria-hidden", "true");
 
   // Rendre les éléments en arrière-plan accessibles à nouveau
-  const bodyContent = document.getElementById("body");
-  bodyContent.removeAttribute("aria-hidden");
+  const headerContent = document.getElementById("header");
+  headerContent.removeAttribute("aria-hidden");
+  const mainContent = document.getElementById("main");
+  mainContent.removeAttribute("aria-hidden");
 
   // Restaurer le focus sur l'élément qui a ouvert la modal dans ce cas le bouton "contactez-moi"
   const triggerButton = document.getElementById("openModalButton");
